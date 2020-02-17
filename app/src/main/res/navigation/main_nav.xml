@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/customerListFragment">
+
+    <fragment
+        android:id="@+id/customerListFragment"
+        android:name="uz.minmax.sampledaggerapp.ui.CustomerListFragment"
+        android:label="fragment_customer_list"
+        tools:layout="@layout/fragment_customer_list" >
+        <action
+            android:id="@+id/action_customerListFragment_to_newCustomerFragment"
+            app:destination="@id/newCustomerFragment" />
+        <action
+            android:id="@+id/action_customerListFragment_to_customerFragment"
+            app:destination="@id/customerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerFragment"
+        android:name="uz.minmax.sampledaggerapp.ui.CustomerDetailsFragment"
+        android:label="fragment_customer_details"
+        tools:layout="@layout/fragment_customer_details" />
+
+    <fragment
+        android:id="@+id/newCustomerFragment"
+        android:name="uz.minmax.sampledaggerapp.ui.NewCustomerFragment"
+        android:label="fragment_new_customer"
+        tools:layout="@layout/fragment_new_customer" />
+</navigation>
