@@ -3,12 +3,14 @@ package uz.minmax.sampledaggerapp.di.component
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import uz.minmax.sampledaggerapp.MainActivity
+import uz.minmax.sampledaggerapp.ui.MainActivity
 import uz.minmax.sampledaggerapp.di.module.AppModule
+import uz.minmax.sampledaggerapp.di.module.RepositoryModule
+import uz.minmax.sampledaggerapp.di.module.RoomDBModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, AppSubComponent::class])
+@Component(modules = [AppModule::class, AppSubComponent::class, RoomDBModule::class, RepositoryModule::class])
 interface AppComponent {
 
     @Component.Factory
@@ -18,5 +20,7 @@ interface AppComponent {
 
     fun loginComponent():LoginComponent.Factory
 
-    fun inject(activity: MainActivity)
+    fun customerComponent():CustomerComponent.Factory
+
+//    fun inject(activity: MainActivity)
 }
