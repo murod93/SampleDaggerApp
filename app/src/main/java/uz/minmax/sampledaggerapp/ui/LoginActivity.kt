@@ -2,7 +2,10 @@ package uz.minmax.sampledaggerapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import uz.minmax.sampledaggerapp.R
 import uz.minmax.sampledaggerapp.app.App
@@ -19,8 +22,19 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+
         loginComponent = (application as App).appComponent.loginComponent().create()
         loginComponent.inject(this)
+
+        findViewById<Button>(R.id.login_button_view).setOnClickListener {
+            loginVM.signInClick()
+        }
+
+        findViewById<TextView>(R.id.forgot_password_view).setOnClickListener{
+            loginVM.forgotPasswordClick()
+        }
+
+        findViewById<TextView>(R.id.sign_up_view).setOnClickListener { loginVM.signUpClick() }
 
         loginVM.signInLiveData.observe(this, Observer {
             Toast.makeText(this, "SignIn", Toast.LENGTH_SHORT).show()
