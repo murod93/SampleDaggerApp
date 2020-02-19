@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/customerListFragment"
         android:name="uz.minmax.sampledaggerapp.ui.CustomerListFragment"
-        android:label="fragment_customer_list"
+        android:label="Customer List"
         tools:layout="@layout/fragment_customer_list" >
         <action
             android:id="@+id/action_customerListFragment_to_newCustomerFragment"
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/customerFragment"
         android:name="uz.minmax.sampledaggerapp.ui.CustomerDetailsFragment"
-        android:label="fragment_customer_details"
+        android:label="Customer Details"
         tools:layout="@layout/fragment_customer_details" />
 
     <fragment
         android:id="@+id/newCustomerFragment"
         android:name="uz.minmax.sampledaggerapp.ui.NewCustomerFragment"
-        android:label="fragment_new_customer"
+        android:label="New Customer"
         tools:layout="@layout/fragment_new_customer" />
 </navigation>

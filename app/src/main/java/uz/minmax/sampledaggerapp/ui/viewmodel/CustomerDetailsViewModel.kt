@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import uz.minmax.sampledaggerapp.data.models.Customer
+import javax.inject.Inject
 
-class CustomerDetailsViewModel : ViewModel(){
+class CustomerDetailsViewModel @Inject constructor() : ViewModel(){
     private val _backClick=MutableLiveData<Unit>()
     val backClick:LiveData<Unit>
         get() = _backClick

@@ -1,5 +1,6 @@
 package uz.minmax.sampledaggerapp.data.local.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import uz.minmax.sampledaggerapp.data.local.dao.CustomerDao
 import uz.minmax.sampledaggerapp.data.models.Customer
@@ -9,10 +10,8 @@ class CustomerRepositoryImpl @Inject constructor(
     private val customerDao: CustomerDao
 ):CustomerRepository{
     override suspend fun getAll(): LiveData<List<Customer>> {
+        Log.e("CustomerRepository", "Customers ")
         return customerDao.getCustomers()
-    }
-
-    override suspend fun insert(vararg customer: Customer) {
     }
 
     override suspend fun delete(customer: Customer) {
@@ -20,6 +19,7 @@ class CustomerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun insert(customer: Customer){
+        Log.e("CustomerRepository", "Customer "+customer.name)
         customerDao.insert(customer)
     }
 

@@ -2,9 +2,11 @@ package uz.minmax.sampledaggerapp.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -43,15 +45,17 @@ class CustomerListFragment : Fragment(), CustomerListAdapter.ICustomerClickListe
         val view = inflater.inflate(R.layout.fragment_customer_list, container, false)
 
         customerListView = view.findViewById(R.id.list_view)
-        customerAddButton = view.findViewById(R.id.add_customer_btn)
+//        customerAddButton = view.findViewById(R.id.add_customer_btn)
 
-        customerAddButton.setOnClickListener { customerViewModel.addClick() }
+//        customerAddButton.setOnClickListener { customerViewModel.addClick() }
 
         customerViewModel.addClick.observe(viewLifecycleOwner, Observer {
             findNavController().navigate(R.id.newCustomerFragment)
         })
 
         customerViewModel.users.observe(viewLifecycleOwner, Observer {customers->
+            Log.e("CustomerListFragment", "custors: "+customers[0].name)
+            Toast.makeText(requireActivity(), "Fetch from DB", Toast.LENGTH_SHORT).show()
             customerListView.also {
                 it.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)

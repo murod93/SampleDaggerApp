@@ -21,6 +21,4 @@ interface AppComponent {
     fun loginComponent():LoginComponent.Factory
 
     fun customerComponent():CustomerComponent.Factory
-
-//    fun inject(activity: MainActivity)
 }

@@ -2,10 +2,13 @@ package uz.minmax.sampledaggerapp.ui.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepository
+import uz.minmax.sampledaggerapp.data.models.Customer
+import javax.inject.Inject
 
-class NewCustomerViewModel : ViewModel(){
-//    private var repository:CustomerRepositoryImpl
+class NewCustomerViewModel @Inject constructor(val repository: CustomerRepository) : ViewModel(){
     private val _backClick = MutableLiveData<Unit>()
     private val _saveClick = MutableLiveData<Unit>()
 
@@ -16,18 +19,22 @@ class NewCustomerViewModel : ViewModel(){
     val backClick:LiveData<Unit> = _backClick
     val saveClick:LiveData<Unit> = _saveClick
 
-    init {
-        // Gets reference to WordDao from WordRoomDatabase to construct
-        // the correct WordRepository.
-//        val customerDao = AppDB.getDatabase(application).customerDao()
-//        repository = CustomerRepositoryImpl(customerDao)
-    }
-
     fun formValid():Boolean{
         val valid1 = nameLiveData.combineWith(passwordLiveData, jobLiveData){s, s2, s3 -> {
             Log.e("NewViewModel", s+" "+s2+" "+s3)
         } }
         return true
+    }
+
+    fun saveClick()= viewModelScope.launch(Dispatchers.IO) {
+        val customer = Customer(1, "Murodjon", "1993.07.15", "Programmer", "img url");
+        repository.insert(customer)
+        _saveClick.postValue(Unit)
+    }
+
+
+    fun backClick(){
+        _backClick.postValue(Unit)
     }
 
     fun <T, K, R> LiveData<T>.combineWith(
@@ -60,14 +67,5 @@ class NewCustomerViewModel : ViewModel(){
             result.value = block.invoke(this.value, liveData.value, liveData2.value)
         }
         return result
-    }
-
-    fun saveClick()=viewModelScope.launch {
-//        repository.insert(Customer())
-        _saveClick.postValue(Unit)
-    }
-
-    fun backClick(){
-        _backClick.postValue(Unit)
     }
 }

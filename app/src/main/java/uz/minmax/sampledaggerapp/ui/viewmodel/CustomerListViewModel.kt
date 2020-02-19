@@ -1,5 +1,6 @@
 package uz.minmax.sampledaggerapp.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,8 @@ class CustomerListViewModel @Inject constructor(customerRepository: CustomerRepo
     init {
         viewModelScope.launch(Dispatchers.IO) {
             customers = customerRepository.getAll()
+            val list:List<Customer> = customers.value!!
+            Log.e("CustomerViewModel", "name: "+list.get(0).name)
         }
     }
 

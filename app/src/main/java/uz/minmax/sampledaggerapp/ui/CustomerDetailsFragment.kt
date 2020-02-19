@@ -11,13 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 
 import uz.minmax.sampledaggerapp.R
 import uz.minmax.sampledaggerapp.ui.viewmodel.CustomerDetailsViewModel
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
 class CustomerDetailsFragment : Fragment() {
 
-    lateinit var viewModel:CustomerDetailsViewModel
+    @Inject lateinit var viewModel:CustomerDetailsViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,8 +31,7 @@ class CustomerDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_customer_details, container, false)
-        viewModel = ViewModelProvider(activity!!).get(CustomerDetailsViewModel::class.java)
-        view
+
         return view
     }
 
