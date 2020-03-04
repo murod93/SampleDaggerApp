@@ -28,9 +28,9 @@ class NewCustomerFragment : Fragment() {
 
     @Inject lateinit var newCustomerViewModel: NewCustomerViewModel
 
-    lateinit var nameView:TextInputEditText
-    lateinit var passwordView:TextInputEditText
-    lateinit var jobView:TextInputEditText
+    private lateinit var nameView:TextInputEditText
+    private lateinit var passwordView:TextInputEditText
+    private lateinit var jobView:TextInputEditText
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,8 +47,9 @@ class NewCustomerFragment : Fragment() {
         nameView = view.findViewById(R.id.name_input_view)
         passwordView = view.findViewById(R.id.password_input_view)
         jobView = view.findViewById(R.id.job_input_view)
+
         view.findViewById<Button>(R.id.btn_save).setOnClickListener {
-            newCustomerViewModel.saveClick()
+            newCustomerViewModel.saveClick(nameView.text.toString(),passwordView.text.toString(),jobView.text.toString())
         }
 
         newCustomerViewModel.backClick.observe(viewLifecycleOwner, Observer {

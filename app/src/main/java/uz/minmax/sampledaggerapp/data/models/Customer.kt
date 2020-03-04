@@ -8,24 +8,24 @@ import java.io.Serializable
 
 @Entity(tableName = "customer_table")
 data class Customer(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     @ColumnInfo(name = "id")
-    val id:Long,
+    var id:Long=0,
 
     @ColumnInfo(name = "name")
     @SerializedName("name")
-    val name:String?,
+    var name:String="",
 
     @SerializedName("password")
     @ColumnInfo(name="customer_password")
-    val password:String,
+    var password:String="",
 
     @SerializedName("job")
     @ColumnInfo(name = "job")
-    val job:String?,
+    var job:String?=null,
 
     @SerializedName("avatar")
     @ColumnInfo(name="avatar_url")
-    val avatar:String?
+    var avatar:String?=null
 ):Serializable

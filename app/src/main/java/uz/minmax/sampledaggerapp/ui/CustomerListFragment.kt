@@ -28,6 +28,8 @@ class CustomerListFragment : Fragment(), CustomerListAdapter.ICustomerClickListe
 
     @Inject lateinit var customerViewModel: CustomerListViewModel
 
+    lateinit var addNewButton: FloatingActionButton
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
@@ -36,7 +38,6 @@ class CustomerListFragment : Fragment(), CustomerListAdapter.ICustomerClickListe
 
     //ui
     private lateinit var customerListView:RecyclerView
-    private lateinit var customerAddButton:FloatingActionButton
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,17 +46,11 @@ class CustomerListFragment : Fragment(), CustomerListAdapter.ICustomerClickListe
         val view = inflater.inflate(R.layout.fragment_customer_list, container, false)
 
         customerListView = view.findViewById(R.id.list_view)
-//        customerAddButton = view.findViewById(R.id.add_customer_btn)
+        addNewButton = view.findViewById(R.id.add_customer_btn)
 
-//        customerAddButton.setOnClickListener { customerViewModel.addClick() }
+        addNewButton.setOnClickListener {findNavController().navigate(R.id.newCustomerFragment) }
 
-        customerViewModel.addClick.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(R.id.newCustomerFragment)
-        })
-
-        customerViewModel.users.observe(viewLifecycleOwner, Observer {customers->
-            Log.e("CustomerListFragment", "custors: "+customers[0].name)
-            Toast.makeText(requireActivity(), "Fetch from DB", Toast.LENGTH_SHORT).show()
+        customerViewModel.customers.observe(viewLifecycleOwner, Observer {customers->
             customerListView.also {
                 it.layoutManager =
                     LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)

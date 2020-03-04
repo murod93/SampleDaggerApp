@@ -7,10 +7,12 @@ import androidx.room.Query
 import uz.minmax.sampledaggerapp.data.models.Customer
 
 @Dao
-abstract class CustomerDao: BaseDao<Customer> {
+interface CustomerDao: BaseDao<Customer> {
+
     @Query("select * from customer_table order by name ASC")
-    abstract fun getCustomers(): LiveData<List<Customer>>
+    fun getCustomers(): LiveData<List<Customer>>
 
     @Insert
-    abstract fun insertAll(customers:List<Customer>)
+    fun insertAll(customers:List<Customer>)
+
 }

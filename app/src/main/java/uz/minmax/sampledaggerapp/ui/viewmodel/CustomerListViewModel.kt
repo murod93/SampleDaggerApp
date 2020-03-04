@@ -1,6 +1,5 @@
 package uz.minmax.sampledaggerapp.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,12 +8,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepository
 import uz.minmax.sampledaggerapp.data.models.Customer
+import uz.minmax.sampledaggerapp.di.scopes.ActivityScope
 import javax.inject.Inject
 
+@ActivityScope
 class CustomerListViewModel @Inject constructor(customerRepository: CustomerRepository):ViewModel(){
 
     private val _addClick = MutableLiveData<Unit>()
-    var users:MutableLiveData<List<Customer>> = MutableLiveData()
     lateinit var customers:LiveData<List<Customer>>
 
     val addClick:LiveData<Unit> = _addClick
@@ -22,8 +22,6 @@ class CustomerListViewModel @Inject constructor(customerRepository: CustomerRepo
     init {
         viewModelScope.launch(Dispatchers.IO) {
             customers = customerRepository.getAll()
-            val list:List<Customer> = customers.value!!
-            Log.e("CustomerViewModel", "name: "+list.get(0).name)
         }
     }
 
