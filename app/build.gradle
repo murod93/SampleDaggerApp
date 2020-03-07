@@ -5,6 +5,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+// Creates a variable called keystorePropertiesFile, and initializes it to the
+// keystore.properties file.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initializes a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Loads the keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -14,7 +24,22 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+//    https://medium.com/@bharathkumarbachina/read-property-file-using-buildconfig-gradle-356c9cf49f0c
+//    https://developer.android.com/studio/build/gradle-tips
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['RELEASE_STORE_FILE'])
+
+            storePassword keystoreProperties['RELEASE_STORE_PASSWORD']
+
+            keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
+
+            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
+        }
     }
 
     // Configure only for each module that uses Java 8
@@ -29,15 +54,25 @@ android {
         jvmTarget = "1.8"
     }
 
-
     dataBinding {
         enabled true
     }
 
     buildTypes {
+        debug {
+            buildConfigField('String', 'BASE_URL', '"https://api.3i.ai/"')
+            buildConfigField('String', 'LOCAL_STORAGE_PASSWORD', '"wdvht45uccfee@#$%^"')
+            buildConfigField('Boolean', 'LOGGING', 'true')
+        }
         release {
+            buildConfigField('String', 'BASE_URL', '"https://api.3i.ai/"')
+            buildConfigField('String', 'LOCAL_STORAGE_PASSWORD', '"wdvht45uccfee@#$%^"')
+            buildConfigField('Boolean', 'LOGGING', 'true')
+
+            signingConfig signingConfigs.release
+
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -45,8 +80,7 @@ android {
 dependencies {
     def androidx_version = "1.1.0"
     def androidx_test_version = "1.2.0"
-    def room_version = "2.2.3"
-
+    def room_version = "2.2.4"
 
     def dagger_version = "2.25.2"
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -57,8 +91,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     kapt "android.arch.persistence.room:compiler:1.1.1"
-
-    // For Kotlin use kapt instead of annotationProcessor
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
@@ -71,18 +103,31 @@ dependencies {
     kapt "android.arch.lifecycle:compiler:$androidx_version"
 
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     testImplementation 'org.mockito:mockito-core:2.25.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.navigation:navigation-fragment:2.2.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
 
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    /**
+     * REST API: Adding retrofit to the mainLayer
+     * */
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
+//    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+//    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
+    /**
+     * Better Logging In Android Using Timber
+     * */
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     androidTestImplementation "androidx.test:runner:$androidx_test_version"
     androidTestImplementation "androidx.test:core-ktx:$androidx_test_version"

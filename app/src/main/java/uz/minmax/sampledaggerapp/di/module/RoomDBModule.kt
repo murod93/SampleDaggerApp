@@ -1,7 +1,6 @@
 package uz.minmax.sampledaggerapp.di.module
 
 import android.content.Context
-import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import uz.minmax.sampledaggerapp.data.local.dao.CustomerDao
@@ -17,14 +16,9 @@ class RoomDBModule {
 
     @Singleton
     @Provides
-    fun provideRoomDatabase(context: Context): AppDB {
-        return Room
-            .databaseBuilder(context, AppDB::class.java, AppDB.DB_NAME)
-            .build()
-    }
+    fun provideRoomDatabase(context: Context) = AppDB.getDatabase(context)
 
+    @Singleton
     @Provides
-    fun provideCustomerDao(appDataBase: AppDB): CustomerDao {
-        return appDataBase.customerDao()
-    }
+    fun provideCustomerDao(appDataBase: AppDB): CustomerDao = appDataBase.customerDao()
 }
