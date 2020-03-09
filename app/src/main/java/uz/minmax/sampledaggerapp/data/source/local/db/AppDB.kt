@@ -1,10 +1,10 @@
-package uz.minmax.sampledaggerapp.data.local.db
+package uz.minmax.sampledaggerapp.data.source.local.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import uz.minmax.sampledaggerapp.data.local.dao.CustomerDao
+import uz.minmax.sampledaggerapp.data.source.local.dao.CustomerDao
 import uz.minmax.sampledaggerapp.data.models.Customer
 
 /**
@@ -24,7 +24,8 @@ abstract class AppDB : RoomDatabase() {
         private var INSTANCE: AppDB? = null
 
         fun getDatabase(context: Context): AppDB {
-            val tempInstance = INSTANCE
+            val tempInstance =
+                INSTANCE
             if (tempInstance != null) {
                 return tempInstance
             }

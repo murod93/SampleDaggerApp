@@ -3,8 +3,8 @@ package uz.minmax.sampledaggerapp.di.module
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import uz.minmax.sampledaggerapp.data.local.dao.CustomerDao
-import uz.minmax.sampledaggerapp.data.local.db.AppDB
+import uz.minmax.sampledaggerapp.data.source.local.dao.CustomerDao
+import uz.minmax.sampledaggerapp.data.source.local.db.AppDB
 import javax.inject.Singleton
 
 /**

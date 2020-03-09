@@ -1,4 +1,4 @@
-package uz.minmax.sampledaggerapp.data.local.dao
+package uz.minmax.sampledaggerapp.data.source.local.dao
 
 import androidx.room.*
 

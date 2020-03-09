@@ -1,4 +1,4 @@
-package uz.minmax.sampledaggerapp.data.local.repository
+package uz.minmax.sampledaggerapp.data.repository
 
 import androidx.lifecycle.LiveData
 import uz.minmax.sampledaggerapp.data.models.Customer

@@ -2,8 +2,8 @@ package uz.minmax.sampledaggerapp.di.module
 
 import dagger.Binds
 import dagger.Module
-import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepository
-import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepositoryImpl
+import uz.minmax.sampledaggerapp.data.repository.CustomerRepository
+import uz.minmax.sampledaggerapp.data.repository.CustomerRepositoryImpl
 
 
 /**
@@ -13,5 +13,5 @@ import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepositoryImpl
 abstract class RepositoryModule {
 
     @Binds
-    abstract fun provideCustomerRepository(customerRepository: CustomerRepositoryImpl):CustomerRepository
+    abstract fun provideCustomerRepository(customerRepository: CustomerRepositoryImpl): CustomerRepository
 }

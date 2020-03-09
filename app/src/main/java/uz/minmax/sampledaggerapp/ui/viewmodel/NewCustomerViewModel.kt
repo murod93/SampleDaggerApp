@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepository
+import uz.minmax.sampledaggerapp.data.repository.CustomerRepository
 import uz.minmax.sampledaggerapp.data.models.Customer
 import javax.inject.Inject
 

@@ -1,16 +1,21 @@
 package uz.minmax.sampledaggerapp.di.module
 
 import android.content.Context
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.readystatesoftware.chuck.ChuckInterceptor
 import dagger.Module
 import dagger.Provides
-import okhttp3.Authenticator
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.minmax.sampledaggerapp.BuildConfig.BASE_URL
+import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
+
 
 /**
  * @author Abdukholikov Murodjon
@@ -18,11 +23,35 @@ import javax.inject.Singleton
 
 @Module
 class NetworkModule {
-    private val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor? =  HttpLoggingInterceptor()
+        .apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
     @Singleton
     @Provides
-    fun getRetrofitAuth(@Named("PRIVATE") client: OkHttpClient) = Retrofit.Builder()
+    @Named("PUBLIC")
+    fun providePublicClient(context: Context, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .addInterceptor(ChuckInterceptor(context))
+        .addInterceptor(loggingInterceptor)
+        .build()
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson? = GsonBuilder()
+        .apply {
+            setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        }.create()
+
+    @Singleton
+    @Provides
+    fun provideRetrofitAuth(@Named("PRIVATE") client: OkHttpClient):Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
@@ -31,22 +60,13 @@ class NetworkModule {
     @Singleton
     @Provides
     @Named("PUBLIC")
-    fun getRetrofit(@Named("PUBLIC") client: OkHttpClient) = Retrofit.Builder()
+    fun provideRetrofit(@Named("PUBLIC") client: OkHttpClient, gson: Gson): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
 
-//    @Singleton
-//    @Provides
-//    @Named("PUBLIC")
-//    fun getClientPublic(context: Context): OkHttpClient = OkHttpClient.Builder()
-//        .addInterceptor(ChuckInterceptor(context))
-//        .addInterceptor(logging)
-//        .build()
-//
-//
 //    @Singleton
 //    @Provides
 //    @Named("PRIVATE")

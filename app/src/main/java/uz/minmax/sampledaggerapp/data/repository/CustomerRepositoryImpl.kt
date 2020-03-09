@@ -1,14 +1,14 @@
-package uz.minmax.sampledaggerapp.data.local.repository
+package uz.minmax.sampledaggerapp.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import uz.minmax.sampledaggerapp.data.local.dao.CustomerDao
+import uz.minmax.sampledaggerapp.data.source.local.dao.CustomerDao
 import uz.minmax.sampledaggerapp.data.models.Customer
 import javax.inject.Inject
 
 class CustomerRepositoryImpl @Inject constructor(
     private val customerDao: CustomerDao
-):CustomerRepository{
+): CustomerRepository {
     override suspend fun getAll(): LiveData<List<Customer>> {
         Log.e("CustomerRepository", "Customers ")
         return customerDao.getCustomers()

@@ -20,7 +20,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "uz.minmax.sampledaggerapp"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -122,8 +122,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.7.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.3.1'
-//    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
-//    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
     /**
      * Better Logging In Android Using Timber
      * */

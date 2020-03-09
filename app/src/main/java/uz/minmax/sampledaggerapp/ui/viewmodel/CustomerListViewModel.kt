@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import uz.minmax.sampledaggerapp.data.local.repository.CustomerRepository
+import uz.minmax.sampledaggerapp.data.repository.CustomerRepository
 import uz.minmax.sampledaggerapp.data.models.Customer
 import uz.minmax.sampledaggerapp.di.scopes.ActivityScope
 import javax.inject.Inject
